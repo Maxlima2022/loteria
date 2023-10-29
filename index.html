@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cartela de Bingo</title>
+    <style>
+        body{
+            background-color: #3d3636;
+        }
+        .cartela {
+            width: 300px;
+            margin: 0 auto;
+            color: #000;
+        }
+
+        .linha {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .numero {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            text-align: center;
+            line-height: 30px;
+            font-size: 18px;
+            background-color: #e95e5e;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+               
+            }
+            .cartela, .cartela * {
+                visibility: visible;
+                color: #000;
+            }
+
+            .cartela {
+                position: absolute;
+                left: 0;
+                top: 0;
+                margin: 0;
+                width: 100%;
+                color: aqua;
+                background-color: #000;
+            }
+
+            .linha {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 3px;
+            }
+
+            .numero {
+                width: 25px;
+                height: 25px;
+                border: 2   px solid #000;
+                text-align: center;
+                line-height: 20px;
+                font-size: 14px;
+                background-color: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+  <center><h1>Cartela de Bingo</h1>
+    <div class="cartela" id="cartela"></div>
+    <button onclick="gerarCartela()">Gerar Cartela</button>
+    <button onclick="imprimirCartela()">Imprimir Cartela</button>
+</center>
+    <script>
+        let cartelaNumbers = [];
+
+        function gerarCartela() {
+            const cartela = document.getElementById("cartela");
+            cartela.innerHTML = "";
+            cartelaNumbers = [];
+
+            let numeros = [];
+            for (let i = 1; i <= 75; i++) {
+                numeros.push(i);
+            }
+
+            for (let i = 0; i < 5; i++) {
+                let linha = document.createElement("div");
+                linha.classList.add("linha");
+
+                for (let j = 0; j < 5; j++) {
+                    const numero = document.createElement("div");
+                    numero.classList.add("numero");
+                    const randomIndex = Math.floor(Math.random() * numeros.length);
+                    numero.textContent = numeros[randomIndex];
+                    numeros.splice(randomIndex, 1);
+                    linha.appendChild(numero);
+                }
+
+                cartela.appendChild(linha);
+            }
+        }
+
+        function imprimirCartela() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
